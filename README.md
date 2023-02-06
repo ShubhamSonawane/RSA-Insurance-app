@@ -1,6 +1,6 @@
 Please install the npm dependencies `npm install` and start project `npm run dev`, this will host the app on port 5173 by default.
 
-Click here to browse the app - http://127.0.0.1:5173/
+Click here to browse the app on your local machine - http://127.0.0.1:5173/
 
 The app is also deployed to vercel here - https://rsa-insurance-app.vercel.app/
 
@@ -17,3 +17,5 @@ For type checking, I utilized TypeScript. To build the frontend components, I ch
 I employed MobX for state management to achieve simple, maintainable, and high-performance code. For APIs, I considered using Redux Toolkit, React Query, and SWR. I ultimately went with React Query as it is lightweight.
 
 Unit testing was carried out using the React Testing Library and Jest. To enforce code standards, I used Eslint with Airbnb standards, and Prettier for code analysis and formatting.
+
+To further enhance the development process, I added Husky to run the scripts and validate the code before committing to GitHub.
