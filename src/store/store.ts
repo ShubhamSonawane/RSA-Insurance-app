@@ -90,7 +90,6 @@ export class AppStore {
   calculatePrice = () => {
     if (this.isAnnual) {
       let price = this.quote.annualPrice;
-      console.log('Hi');
       if (this.selectedAddOns.length > 0) {
         price = this.selectedAddOns.reduce(
           (sum, item) => sum + item.annualPrice,

@@ -41,6 +41,9 @@ const Home: FC = observer(() => {
     }
   }, [addons, quotes, store]);
 
+  if (isQuotesError || isAddOnsError) {
+    return <Error errorMessage={errorQuote || errorAddOns} />;
+  }
   return (
     <div className="min-h-full">
       <header className="bg-white shadow">
@@ -61,13 +64,11 @@ const Home: FC = observer(() => {
                 <Quote />
               </>
             )}
-            {isQuotesError && <Error errorMessage={errorQuote as string} />}
           </div>
           <div className="text-3xl font-semibold mb-6 mt-10">
             Tailor your cover with our optional extra
           </div>
           {isAddOnsLoading ? <Loading /> : <AddOn />}
-          {isAddOnsError && <Error errorMessage={errorAddOns as string} />}
         </Layout>
       </main>
     </div>
