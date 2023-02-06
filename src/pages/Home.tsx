@@ -61,24 +61,13 @@ const Home: FC = observer(() => {
                 <Quote />
               </>
             )}
-            {isQuotesError ? (
-              <Error errorMessage={errorQuote as string} />
-            ) : (
-              <>
-                <CustomerInfo />
-                <Quote />
-              </>
-            )}
+            {isQuotesError && <Error errorMessage={errorQuote as string} />}
           </div>
           <div className="text-3xl font-semibold mb-6 mt-10">
             Tailor your cover with our optional extra
           </div>
           {isAddOnsLoading ? <Loading /> : <AddOn />}
-          {isAddOnsError ? (
-            <Error errorMessage={errorAddOns as string} />
-          ) : (
-            <AddOn />
-          )}
+          {isAddOnsError && <Error errorMessage={errorAddOns as string} />}
         </Layout>
       </main>
     </div>
