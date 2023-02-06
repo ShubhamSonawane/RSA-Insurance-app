@@ -19,3 +19,6 @@ I employed MobX for state management to achieve simple, maintainable, and high-p
 Unit testing was carried out using the React Testing Library and Jest. To enforce code standards, I used Eslint with Airbnb standards, and Prettier for code analysis and formatting.
 
 To further enhance the development process, I added Husky to run the scripts and validate the code before committing to GitHub.
+
+The performance audit by lighthouse is as below-
+![image](https://user-images.githubusercontent.com/20298268/217028416-a65f0321-ed26-4709-819e-65b176672015.png)
