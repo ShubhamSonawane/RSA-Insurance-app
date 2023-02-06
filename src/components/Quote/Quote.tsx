@@ -31,7 +31,7 @@ const Quote: FC = observer(() => {
       </div>
       <div className="flex justify-center my-5 w-auto">
         <Button
-          text={`${store.isAnnual ? 'Switch to annual' : 'Switch to monthly'}`}
+          text={`${store.isAnnual ? 'Switch to monthly' : 'Switch to annual'}`}
           onClick={() => store.togglePayment()}
         />
       </div>

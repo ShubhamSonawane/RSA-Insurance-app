@@ -1,0 +1,7 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "Pre-commit actions"
+npx lint-staged
+npm run typescript:validate
+npm run test

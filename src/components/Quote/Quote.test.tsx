@@ -81,7 +81,7 @@ describe('<Quote />', () => {
     ];
     useStore.mockReturnValue(store as any);
     const { getByText } = render(<Quote />);
-    const button = getByText(/switch to monthly/i);
+    const button = getByText(/switch to annual/i);
     fireEvent.click(button);
 
     expect(store.togglePayment).toHaveBeenCalled();

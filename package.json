@@ -7,7 +7,14 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview --port 8080",
-    "test": "jest"
+    "test": "jest",
+    "typescript:validate": "tsc",
+    "prepare": "husky install",
+    "format": "prettier --ignore-path .gitignore --ignore-unknown",
+    "format:fix": "npm run format -- --write .",
+    "lint:fix": "eslint --fix --ext .ts,.tsx .",
+    "lint:validate": "eslint --ext .ts,.tsx . --max-warnings 100",
+    "validate": "concurrently npm:format:validate npm:lint:validate"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -47,5 +54,9 @@
     "ts-jest": "^29.0.5",
     "typescript": "^4.9.3",
     "vite": "^4.1.0"
+  },
+  "lint-staged": {
+    "*.tsx, ts": "eslint --cache --fix",
+    "*.{tsx, ts, jsx, js ,css}": "npm run format"
   }
 }
