@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { FC, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
@@ -43,57 +44,61 @@ const Quote: FC = observer(() => {
     }
   }, [quotes, store]);
 
-  if (isQuotesLoading) {
-    return <Loading />;
-  }
-
-  if (isQuotesError) {
-    return <Error errorMessage={errorQuote} />;
-  }
-
   return (
     <Content>
-      <Container>
-        <Text>
-          {HEY} {store.quote.firstName},
-        </Text>
-        <SubText>
-          {HERE_IS_YOUR_QUOTE} {store.quote.address1}, {store.quote.address2}
-        </SubText>
-        <SubText>
-          {QUOTE_REFERENCE} {store.quote.quoteRef}
-        </SubText>
-        <SubText>
-          {COVER_STARTS_ON}{' '}
-          {moment(store.quote.startDate).utc().format('DD-MMM-YYYY')}
-        </SubText>
-      </Container>
-      <StyledPriceBox>
-        {store.isAnnual ? (
-          <>
-            <h3>
-              {POUND}
-              {store.quote.finalPrice}
-            </h3>
-            <h4>{PER_YEAR}</h4>
-          </>
-        ) : (
-          <>
-            <h3>
-              {POUND}
-              {store.quote.finalPrice}
-            </h3>
-            <h4>{PER_MONTH}</h4>
-          </>
-        )}
-        <span className="price-note">{NOTE}</span>
-        <div className="toggle-payment">
-          <Button
-            text={`${store.isAnnual ? SWITCH_TO_MONTHLY : SWITCH_TO_ANNUAL}`}
-            onClick={() => store.togglePayment()}
-          />
-        </div>
-      </StyledPriceBox>
+      {isQuotesError ? (
+        <Error errorMessage={errorQuote} />
+      ) : isQuotesLoading ? (
+        <Loading />
+      ) : (
+        <Container>
+          <Text>
+            {HEY} {store.quote.firstName},
+          </Text>
+          <SubText>
+            {HERE_IS_YOUR_QUOTE} {store.quote.address1}, {store.quote.address2}
+          </SubText>
+          <SubText>
+            {QUOTE_REFERENCE} {store.quote.quoteRef}
+          </SubText>
+          <SubText>
+            {COVER_STARTS_ON}{' '}
+            {moment(store.quote.startDate).utc().format('DD-MMM-YYYY')}
+          </SubText>
+        </Container>
+      )}
+      {isQuotesError ? (
+        <Error errorMessage={errorQuote} />
+      ) : isQuotesLoading ? (
+        <Loading />
+      ) : (
+        <StyledPriceBox>
+          {store.isAnnual ? (
+            <>
+              <h3>
+                {POUND}
+                {store.quote.finalPrice}
+              </h3>
+              <h4>{PER_YEAR}</h4>
+            </>
+          ) : (
+            <>
+              <h3>
+                {POUND}
+                {store.quote.finalPrice}
+              </h3>
+              <h4>{PER_MONTH}</h4>
+            </>
+          )}
+          <span className="price-note">{NOTE}</span>
+          <div className="toggle-payment">
+            <Button
+              text={`${store.isAnnual ? SWITCH_TO_MONTHLY : SWITCH_TO_ANNUAL}`}
+              onClick={() => store.togglePayment()}
+            />
+          </div>
+        </StyledPriceBox>
+      )}
     </Content>
   );
 });
