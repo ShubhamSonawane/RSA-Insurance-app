@@ -14,7 +14,7 @@ const newAppStore = () => {
 };
 
 describe('AddOns', () => {
-  const store = newAppStore();
+  let store = newAppStore();
   store.isAnnual = false;
   store.addOns = [
     {
@@ -50,7 +50,6 @@ describe('AddOns', () => {
   });
 
   it('calls the addExtra and removeExtra functions correctly', () => {
-    let store = newAppStore();
     store.isAnnual = false;
     store.addOns = [
       {
