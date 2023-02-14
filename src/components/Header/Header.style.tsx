@@ -7,6 +7,9 @@ const HeaderWrapper = styled.header`
   height: 72px;
   background: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  @media (max-width: 640px) {
+    height: 50px;
+  }
 `;
 
 const Container = styled.div`
@@ -24,6 +27,9 @@ const Title = styled.h1`
   letter-spacing: 0.25px;
   color: #2d3748;
   text-align: center;
+  @media (max-width: 640px) {
+    font-size: 24px;
+  }
 `;
 
 export { HeaderWrapper, Container, Title };
