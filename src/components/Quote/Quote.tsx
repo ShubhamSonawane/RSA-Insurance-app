@@ -1,41 +1,100 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
+import moment from 'moment';
 import { useStore } from '../../hooks/hooks';
 import Button from '../Button/Button';
+import useQuote from '../../hooks/useQuote';
+import { CustomerQuote } from '../../contentTypes/contentTypes';
+import Loading from '../Loading/Loading';
+import {
+  Container,
+  Content,
+  StyledPriceBox,
+  SubText,
+  Text,
+} from './Quote.style';
+import Error from '../Error/Error';
+import {
+  COVER_STARTS_ON,
+  HERE_IS_YOUR_QUOTE,
+  HEY,
+  NOTE,
+  PER_MONTH,
+  PER_YEAR,
+  POUND,
+  QUOTE_REFERENCE,
+  SWITCH_TO_ANNUAL,
+  SWITCH_TO_MONTHLY,
+} from '../../constants/AppConstants';
 
 const Quote: FC = observer(() => {
   const store = useStore('AppStore');
 
+  const { quotes, isQuotesError, isQuotesLoading, errorQuote } = useQuote();
+
+  useEffect(() => {
+    if (quotes as CustomerQuote[]) {
+      const quote: CustomerQuote = {
+        ...(quotes as CustomerQuote[])[0],
+        finalPrice: quotes?.[0].monthlyPrice as number,
+        isAnnual: store.isAnnual,
+      };
+      store.setQuote(quote);
+    }
+  }, [quotes, store]);
+
+  if (isQuotesLoading) {
+    return <Loading />;
+  }
+
+  if (isQuotesError) {
+    return <Error errorMessage={errorQuote} />;
+  }
+
   return (
-    <div className="bg-white shadow border rounded-sm">
-      {store.isAnnual ? (
-        <>
-          <div className="text-5xl font-normal mt-4 text-center ">
-            £{store.quote.finalPrice}
-          </div>
-          <div className="text-2xl font-normal text-center ">per year</div>
-        </>
-      ) : (
-        <>
-          <div className="text-5xl font-normal mt-4 text-center ">
-            £{store.quote.finalPrice}
-          </div>
-          <div className="text-2xl font-normal text-center ">per month</div>
-        </>
-      )}
-      <div className="flex justify-center mt-5 w-auto">
-        <span className=" text-sm text-center w-4/6">
-          This price includes Insurance Premium Tax at the current rate. No
-          charge for paying monthly.
-        </span>
-      </div>
-      <div className="flex justify-center my-5 w-auto">
-        <Button
-          text={`${store.isAnnual ? 'Switch to monthly' : 'Switch to annual'}`}
-          onClick={() => store.togglePayment()}
-        />
-      </div>
-    </div>
+    <Content>
+      <Container>
+        <Text>
+          {HEY} {store.quote.firstName},
+        </Text>
+        <SubText>
+          {HERE_IS_YOUR_QUOTE} {store.quote.address1}, {store.quote.address2}
+        </SubText>
+        <SubText>
+          {QUOTE_REFERENCE} {store.quote.quoteRef}
+        </SubText>
+        <SubText>
+          {COVER_STARTS_ON}{' '}
+          {moment(store.quote.startDate).utc().format('DD-MMM-YYYY')}
+        </SubText>
+      </Container>
+      <StyledPriceBox>
+        {store.isAnnual ? (
+          <>
+            <h3>
+              {POUND}
+              {store.quote.finalPrice}
+            </h3>
+            <h4>{PER_YEAR}</h4>
+          </>
+        ) : (
+          <>
+            <h3>
+              {POUND}
+              {store.quote.finalPrice}
+            </h3>
+            <h4>{PER_MONTH}</h4>
+          </>
+        )}
+        <span className="price-note">{NOTE}</span>
+        <div className="toggle-payment">
+          <Button
+            text={`${store.isAnnual ? SWITCH_TO_MONTHLY : SWITCH_TO_ANNUAL}`}
+            onClick={() => store.togglePayment()}
+          />
+        </div>
+      </StyledPriceBox>
+    </Content>
   );
 });
 

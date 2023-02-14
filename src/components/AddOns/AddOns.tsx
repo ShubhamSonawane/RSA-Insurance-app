@@ -1,12 +1,42 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import Button from '../Button/Button';
 import { useStore } from '../../hooks/hooks';
+import useAddOns from '../../hooks/useAddOns';
+import Loading from '../Loading/Loading';
+import Error from '../Error/Error';
+import { Container, DescriptionText } from './AddOns.style';
+import { PER_MONTH, PER_YEAR, POUND } from '../../constants/AppConstants';
 
 const AddOns: FC = observer(() => {
   const store = useStore('AppStore');
+
+  const { addons, isAddOnsError, isAddOnsLoading, errorAddOns } = useAddOns();
+
+  useEffect(() => {
+    if (addons) {
+      store.setAddons(addons);
+    }
+  }, [addons, store]);
+
+  useEffect(() => {
+    store.isLoadingAddons = isAddOnsLoading;
+  }, [isAddOnsLoading, store]);
+
+  useEffect(() => {
+    store.isErrorAddons = isAddOnsError;
+  }, [isAddOnsError, store]);
+
+  if (isAddOnsLoading) {
+    return <Loading />;
+  }
+
+  if (isAddOnsError) {
+    return <Error errorMessage={errorAddOns} />;
+  }
+
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-4 md:gap-6">
+    <Container>
       {store.addOns?.map((item) => {
         return (
           <div
@@ -19,25 +49,28 @@ const AddOns: FC = observer(() => {
           >
             <div key={item.title + item.monthlyPrice}>
               <div className="grid grid-cols-3">
-                <div className="text-lg font-semibold mt-2 col-span-2">
+                <div className="text-lg font-bold mt-0 col-span-2">
                   {item.title}
                 </div>
                 {store.isAnnual ? (
-                  <div className="text-sm mt-3">
+                  <DescriptionText>
                     <span className="float-right">
-                      £{item.annualPrice} per year
+                      {POUND}
+                      {item.annualPrice} {PER_YEAR}
                     </span>
-                  </div>
+                  </DescriptionText>
                 ) : (
-                  <div className="text-sm mt-3">
+                  <DescriptionText>
                     <span className="float-right">
-                      £{item.monthlyPrice} per month
+                      {POUND}
+                      {item.monthlyPrice} {PER_MONTH}
                     </span>
-                  </div>
+                  </DescriptionText>
                 )}
               </div>
-              <div className="text-sm mt-2">{item.text}</div>
-
+              <div className="mt-8">
+                <DescriptionText> {item.text}</DescriptionText>
+              </div>
               <div className="mt-4 flex float-right">
                 {store.selectedAddOns.some(
                   (extra) => extra.title === item.title
@@ -57,7 +90,7 @@ const AddOns: FC = observer(() => {
           </div>
         );
       })}
-    </div>
+    </Container>
   );
 });
 

@@ -45,6 +45,12 @@ export class AppStore {
   @observable
   isAnnual = false;
 
+  @observable
+  isLoadingAddons = false;
+
+  @observable
+  isErrorAddons = false;
+
   constructor() {
     makeAutoObservable(
       this,

@@ -14,24 +14,24 @@ const newAppStore = () => {
 };
 
 describe('AddOns', () => {
+  const store = newAppStore();
+  store.isAnnual = false;
+  store.addOns = [
+    {
+      title: 'Add-on 1',
+      annualPrice: 100,
+      monthlyPrice: 10,
+      text: 'This is add-on 1',
+    },
+    {
+      title: 'Add-on 2',
+      annualPrice: 200,
+      monthlyPrice: 20,
+      text: 'This is add-on 2',
+    },
+  ];
+  useStore.mockReturnValue(store as any);
   it('renders the add-ons and buttons correctly', () => {
-    const store = newAppStore();
-    store.isAnnual = false;
-    store.addOns = [
-      {
-        title: 'Add-on 1',
-        annualPrice: 100,
-        monthlyPrice: 10,
-        text: 'This is add-on 1',
-      },
-      {
-        title: 'Add-on 2',
-        annualPrice: 200,
-        monthlyPrice: 20,
-        text: 'This is add-on 2',
-      },
-    ];
-    useStore.mockReturnValue(store as any);
     const { getByText, getAllByText } = render(<AddOns />);
 
     const addOn1 = getByText('Add-on 1');

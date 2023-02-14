@@ -1,16 +1,21 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
+import {
+  ERROR_FOR_LOCALHOST,
+  TYPESCRIPT_FAILED_TO_FETCH,
+} from '../../constants/AppConstants';
+import { ErrorContainer, ErrorMessage, ErrorTitle } from './Error.style';
 
 function Error(error: any) {
   return (
-    <div className="bg-red-500 text-white p-3 rounded-lg shadow-lg text-center">
-      <p className="text-lg font-bold">Error</p>
-      <p>
-        {error.errorMessage.message === 'TypeError: Failed to fetch'
-          ? 'Please run localhost:3000 on your machine'
+    <ErrorContainer>
+      <ErrorTitle>Error</ErrorTitle>
+      <ErrorMessage>
+        {error.errorMessage.message === TYPESCRIPT_FAILED_TO_FETCH
+          ? ERROR_FOR_LOCALHOST
           : error.errorMessage.message}
-      </p>
-    </div>
+      </ErrorMessage>
+    </ErrorContainer>
   );
 }
 
