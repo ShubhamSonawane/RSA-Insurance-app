@@ -4,7 +4,7 @@ const HeaderWrapper = styled.header`
   position: fixed;
   top: 0;
   width: 100%;
-  height: 50px;
+  height: 72px;
   background: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
@@ -19,7 +19,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 24px;
+  font-size: 42px;
   font-weight: bold;
   letter-spacing: 0.25px;
   color: #2d3748;
